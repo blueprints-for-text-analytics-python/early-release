@@ -1,0 +1,2 @@
+textwrap3
+plotly>=4.8.2
