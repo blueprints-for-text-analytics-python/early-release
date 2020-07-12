@@ -1,0 +1,6 @@
+ignore/*
+.idea
+.ipynb_checkpoints
+__pycache__
+Makefile
+data/reddit-selfposts/reddit-selfposts.db
