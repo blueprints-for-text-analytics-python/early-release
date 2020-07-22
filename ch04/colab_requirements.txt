@@ -1,0 +1,3 @@
+spacy==2.3.0
+# spacy-lookups-data
+textacy>=0.10.0
