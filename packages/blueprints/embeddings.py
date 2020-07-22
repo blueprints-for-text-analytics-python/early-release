@@ -10,9 +10,9 @@ def plot_embeddings(model, search=[], topn=0, show_all=False, train_all=False,
 
     def closest(word, model, search, topn):
         """Find the closest word in a given list of search words, if in top-n."""
-        closest_word = model.wv.most_similar_to_given(word, search)
+        closest_word = model.most_similar_to_given(word, search)
         if word == closest_word or \
-           word in [w for w, _ in model.wv.most_similar(closest_word, topn=topn)]:
+           word in [w for w, _ in model.most_similar(closest_word, topn=topn)]:
             return closest_word 
         else:
             return 'other'
@@ -40,20 +40,20 @@ def plot_embeddings(model, search=[], topn=0, show_all=False, train_all=False,
         
     # identify words to plot
     if show_all:
-        words = [w for w in model.wv.vocab]
+        words = [w for w in model.vocab]
     else:
         words = search + [sim_word for w in search 
-                         for sim_word, _ in model.wv.most_similar(w, topn=topn)]
+                         for sim_word, _ in model.most_similar(w, topn=topn)]
         words = list(set(words)) # make word list it unique for t-SNE
 
     # reduce
-    wv = [model.wv[word] for word in words]
+    wv = [model[word] for word in words]
     if not train_all:
         print(f"Calculating {algo} for {len(words)} words ...", end="") 
         reduced_wv = reducer.fit_transform(wv)
     else:
-        print(f"Calculating {algo} for {len(model.wv.vocab)} words ...", end="") 
-        reducer.fit(model.wv.vectors)
+        print(f"Calculating {algo} for {len(model.vocab)} words ...", end="") 
+        reducer.fit(model.vectors)
         reduced_wv = reducer.transform(wv)
     print(f" done.") ###
 
