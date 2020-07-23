@@ -2,7 +2,7 @@
 
 import sys, os
 
-GIT_ROOT = 'https://github.com/blueprints-for-text-analytics-python/early-release'
+GIT_ROOT = 'https://github.com/blueprints-for-text-analytics-python/early-release/raw/master'
 
 # this is generic, maybe externalize?
 ON_COLAB = 'google.colab' in sys.modules
