@@ -20,20 +20,20 @@ def universal_filename(f):
 
 
 
-DEBATES_FILENAME = os.path.join('data', 'un-general-debates', 'un-general-debates-blueprint.csv.gz')
-DEBATES_FILE = universal_filename(DEBATES_FILENAME)
+_DEBATES_FILE = os.path.join('data', 'un-general-debates', 'un-general-debates-blueprint.csv.gz')
+DEBATES_FILE = universal_filename(_DEBATES_FILE)
 
 if ON_COLAB:
     # there are some generic files, maybe externalize?
     required_files = [
                   'settings.py',
-                  DEBATES_FILENAME,
+                  _DEBATES_FILE,
                   'ch08/colab_requirements.txt'
     ]
     print("Downloading required files ...")
     for file in required_files:
-        cmd = ['wget', '-P', os.path.dirname(BASE_DIR+'/'+file), GIT_ROOT+'/'+file]
-        print('!'+' '.join(cmd))
+        cmd = ' '.join(['wget', '-P', os.path.dirname(BASE_DIR+'/'+file), GIT_ROOT+'/'+file])
+        print('!'+cmd)
         os.system(cmd)
 
 
