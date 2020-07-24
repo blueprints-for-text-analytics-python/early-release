@@ -14,11 +14,14 @@ def display_ner(doc, include_punct=False):
             row = {'token': i, 
                    'text': t.text, 'lemma': t.lemma_, 
                    'pos': t.pos_, 'dep': t.dep_, 'ent_type': t.ent_type_}
-            if doc._.has('coref_clusters'): # neuralcoref attributes
+            if t.has_extension('in_coref') and t._.in_coref: # neuralcoref attributes
                 row['in_coref'] = t._.in_coref
-                row['main_coref'] = t._.coref_clusters[0].main.text if t._.in_coref else None
-            if t._.has('referent'): # fuzzy_name_coref attribute
-                row['referent'] = t._.referent.text if t._.referent is not None else None
+                row['main_coref'] = t._.coref_clusters[0].main.text
+            if t.has_extension('ref_n'): # name_coref attribute
+                row['ref_n'] = t._.ref_n
+                row['ref_t'] = t._.ref_t
+            if t.has_extension('ref_ent'): # ref_n/ref_t
+                row['ref_ent'] = t._.ref_ent
             rows.append(row)
     
     df = pd.DataFrame(rows).set_index('token')
@@ -55,3 +58,18 @@ def spacy_load(lang, use_stanza=False):
     nlp.add_pipe(nlp.create_pipe("merge_entities"))
 
     return nlp
+
+
+def print_dep_tree(doc, skip_punct=True):
+    """Utility function to pretty print the dependency tree."""
+    
+    def print_recursive(root, indent, skip_punct):
+        if not root.dep_ == 'punct' or not skip_punct:
+            print(" "*indent + f"{root} [{root.pos_}, {root.dep_}]")
+        for left in root.lefts:
+            print_recursive(left, indent=indent+4, skip_punct=skip_punct)
+        for right in root.rights:
+            print_recursive(right, indent=indent+4, skip_punct=skip_punct)
+
+    for sent in doc.sents: # iterate over all sentences in a doc
+        print_recursive(sent.root, indent=0, skip_punct=skip_punct) 

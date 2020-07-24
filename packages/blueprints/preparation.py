@@ -25,18 +25,15 @@ import pandas as pd
 
 def display_nlp(doc, include_punct=False):
     """Generate data frame for visualization of spaCy tokens."""
-
     rows = []
     for i, t in enumerate(doc):
         if not t.is_punct or include_punct:
-            row = {'token': i, 
-                   'text': t.text, 'lemma': t.lemma_, 
+            row = {'token': i,  'text': t.text, 'lemma_': t.lemma_, 
                    'is_stop': t.is_stop, 'is_alpha': t.is_alpha,
-                   'pos': t.pos_, 'dep': t.dep_, 
-                   'ent_type': t.ent_type_}
+                   'pos_': t.pos_, 'dep_': t.dep_, 'ent_type_': t.ent_type_}
             rows.append(row)
     
     df = pd.DataFrame(rows).set_index('token')
     df.index.name = None
-    
     return df
+
