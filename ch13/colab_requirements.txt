@@ -5,4 +5,4 @@ stanza==1.0.1
 spacy-stanza==0.2.3
 # neuralcoref
 # textrazor
-fuzzywuzzy
+sparqlwrapper
