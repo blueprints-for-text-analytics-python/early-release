@@ -15,7 +15,7 @@ else:
     print(f'Files will be searched relative to "{BASE_DIR}".')
 
 def universal_filename(f):
-    return os.path.join(BASE_DIR, f)
+    return os.path.join(DIR, f)
 
 if ON_COLAB:
     required_files = [
