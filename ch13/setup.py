@@ -8,11 +8,11 @@ ON_COLAB = 'google.colab' in sys.modules
 if ON_COLAB:
     DIR = "/content"
     print("You are working on Google Colab.")
-    print(f'Files will be downloaded to "{BASE_DIR}".')
+    print(f'Files will be downloaded to "{DIR}".')
 else:
     DIR = ".."
     print("You are working on a local system.")
-    print(f'Files will be searched relative to "{BASE_DIR}".')
+    print(f'Files will be searched relative to "{DIR}".')
 
 def universal_filename(f):
     return os.path.join(DIR, f)
