@@ -14,11 +14,14 @@ def display_ner(doc, include_punct=False):
                    'pos': t.pos_, 'dep': t.dep_, 'ent_type': t.ent_type_,
                    'ent_iob_': t.ent_iob_}
             
-            if doc.has_extension('has_coref') and \
-               doc._.coref_clusters is not None and \
-               t.has_extension('in_coref') and t._.in_coref: # neuralcoref attributes
-                row['in_coref'] = t._.in_coref
-                row['main_coref'] = t._.coref_clusters[0].main.text
+            if doc.has_extension('has_coref'):
+                if doc._.coref_clusters is not None and \
+                   t.has_extension('in_coref') and t._.in_coref: # neuralcoref attributes
+                    row['in_coref'] = t._.in_coref
+                    row['main_coref'] = t._.coref_clusters[0].main.text
+                else:
+                    row['in_coref'] = None
+                    row['main_coref'] = None
             if t.has_extension('ref_n'): # name_coref attribute
                 row['ref_n'] = t._.ref_n
                 row['ref_t'] = t._.ref_t_
