@@ -5,6 +5,7 @@ warnings.filterwarnings('ignore');
 # common imports
 import pandas as pd
 import numpy as np
+import math
 import re
 import glob
 import os
@@ -29,6 +30,8 @@ pd.options.display.max_rows = 60 # default 60
 pd.options.display.float_format = '{:.2f}'.format
 # pd.options.display.precision = 2
 pd.options.display.max_colwidth = 200 # default 50; -1 = all
+# otherwise text between $ signs will be interpreted as formula and printed in italic
+pd.set_option('display.html.use_mathjax', False)
 
 # np.set_printoptions(edgeitems=3) # default 3
 

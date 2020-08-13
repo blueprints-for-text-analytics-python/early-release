@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-import sys, os
+import sys, os, subprocess
+from subprocess import PIPE
 
 GIT_ROOT = 'https://github.com/blueprints-for-text-analytics-python/early-release/raw/master'
 
@@ -22,7 +23,7 @@ if ON_COLAB:
                   'settings.py',
                   'packages/blueprints/__init__.py',
                   'packages/blueprints/preparation.py',
-                  'packages/blueprints/extraction.py',
+                  'packages/blueprints/knowledge.py',
                   'ch13/colab_requirements.txt'
                   
     ]
@@ -31,14 +32,16 @@ if ON_COLAB:
         cmd = ' '.join(['wget', '-P', os.path.dirname(DIR+'/'+file), GIT_ROOT+'/'+file])
         print('!'+cmd)
         if os.system(cmd) != 0:
-            stdout, stderr = subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
-            print(stderr.decode())
+            print('  --> ERROR')
+        # stdout, stderr = subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
+        # print(stderr.decode())
 
 if ON_COLAB:
-    print("\nAdditional setup ...")
-    setup_cmds = ['pip install -r ch13/colab_requirements.txt',
+    print("\nAdditional setup ... (may take a few minutes)")
+    setup_cmds = ['mkdir figures',
+                  'pip install -r ch13/colab_requirements.txt',
                   'python -m spacy download en',
-                  'python -m spacy download en_core_web_lg',
+                  # 'python -m spacy download en_core_web_lg',
                   'git clone https://github.com/huggingface/neuralcoref.git',
                   'cd neuralcoref;sed "/spacy/d" requirements.txt > requirements.txt',
                   'cd neuralcoref;pip install -r requirements.txt;pip install -e .'
@@ -48,3 +51,6 @@ if ON_COLAB:
         print('!'+cmd)
         if os.system(cmd) != 0:
             print('  --> ERROR')
+
+sys.path.append(DIR + '/packages')
+sys.path.append('neuralcoref')
