@@ -1,8 +1,0 @@
-spacy==2.3.0
-# spacy-lookups-data
-# textacy
-# stanza==1.0.1
-# spacy-stanza==0.2.3
-git+https://github.com/huggingface/neuralcoref.git
-# textrazor
-sparqlwrapper
